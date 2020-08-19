@@ -1,6 +1,6 @@
 package numtoword
 
-// TitleNum seperate name and numbers title
+// TitleNum separate name and numbers title
 type TitleNum struct {
 	Num   uint
 	Title string

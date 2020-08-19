@@ -2,6 +2,11 @@ package numtoword
 
 // EnConverter is used for converting number to kurdish words
 func EnConverter(num uint) (finalResult string) {
+	if num == 0 {
+		finalResult = "سفر"
+		return
+	}
+
 	level := []string{"", " thousand", " million", " billion", " trilion"}
 
 	k := 0
