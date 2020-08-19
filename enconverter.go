@@ -2,7 +2,7 @@ package numtoword
 
 // EnConverter is used for converting number to kurdish words
 func EnConverter(num uint) (finalResult string) {
-	level := []string{"", " thousand", " milion", " billion", " trilion"}
+	level := []string{"", " thousand", " million", " billion", " trilion"}
 
 	k := 0
 	for num > 0 {
@@ -81,12 +81,12 @@ func enHundred(num uint) (result string) {
 	nMaps[19] = "nineteen"
 	nMaps[20] = "twenty"
 	nMaps[30] = "thirty"
-	nMaps[40] = "fourty"
+	nMaps[40] = "forty"
 	nMaps[50] = "fifty"
 	nMaps[60] = "sixty"
 	nMaps[70] = "seventy"
 	nMaps[80] = "eighty"
-	nMaps[90] = "ninty"
+	nMaps[90] = "ninety"
 
 	for _, v := range nums {
 		if v.Num == 0 {

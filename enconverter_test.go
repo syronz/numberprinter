@@ -15,7 +15,7 @@ func TestEnConverter(t *testing.T) {
 		{15, "fifteen"},
 		{25, "twenty and five"},
 		{22, "twenty and two"},
-		{40, "fourty"},
+		{40, "forty"},
 		{36, "thirty and six"},
 		{71, "seventy and one"},
 		{15, "fifteen"},
@@ -25,8 +25,8 @@ func TestEnConverter(t *testing.T) {
 		{100000000000, "one hundred billion"},
 		{100000000001, "one hundred billion and one"},
 		{3522, "three thousand and five hundred and twenty and two"},
-		{6372428, "six milion and three hundred and seventy and two thousand and four hundred and twenty and eight"},
-		{1002003004, "one billion and two milion and three thousand and four"},
+		{6372428, "six million and three hundred and seventy and two thousand and four hundred and twenty and eight"},
+		{1002003004, "one billion and two million and three thousand and four"},
 		// {100,000,000,000, "one hundred billion"},
 	}
 
