@@ -1,14 +1,8 @@
 package numtoword
 
-// TitleNum separate name and numbers title
-type TitleNum struct {
-	Num   uint
-	Title string
-}
-
 // KuConverter is used for converting number to kurdish words
 func KuConverter(num uint) (finalResult string) {
-	level := []string{"", " هەزار", " ملیۆن", " ملیار", " هەزار ملیار"}
+	level := []string{"", "هەزار", "ملیۆن", "ملیار", " هەزار ملیار"}
 	if num == 0 {
 		finalResult = "سفر"
 		return
@@ -25,8 +19,11 @@ func KuConverter(num uint) (finalResult string) {
 		k++
 
 	}
+	//    string([]rune(s)[2:9])
 
-	finalResult = finalResult[0 : len(finalResult)-5]
+	//len := len(finalResult)
+	//finalResult = string([]rune(finalResult)[0 : len(finalResult)-3])
+	finalResult = finalResult[0 : len(finalResult)-3]
 
 	return
 }
@@ -105,8 +102,8 @@ func kuHundred(num uint) (result string) {
 		result += " و " + nMaps[v.Num] + v.Title
 	}
 
-	result = result[5:]
-
+	result = string([]rune(result)[3:])
+	//result =result[5:0]
 	return
 
 }
