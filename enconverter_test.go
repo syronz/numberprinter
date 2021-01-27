@@ -8,7 +8,7 @@ func TestEnConverter(t *testing.T) {
 		in  uint
 		out string
 	}{
-		{0, "zero"},
+		{1052, "thousand and fifty two"},
 		{1, "one"},
 		{6, "six"},
 		{9, "nine"},

@@ -19,7 +19,7 @@ func TestKuConverter(t *testing.T) {
 		{36, "thirty and six"},
 		{71, "seventy and one"},
 		{15, "fifteen"},
-		{106, "one hundred and six"},
+		{150, "one hundred and six"},
 		{100, "one hundred"},
 		{223, "two hundred and twenty and three"},
 		{100000000000, "one hundred billion"},

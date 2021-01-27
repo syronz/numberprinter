@@ -3,7 +3,7 @@ package numtoword
 // EnConverter is used for converting number to kurdish words
 func EnConverter(num uint) (finalResult string) {
 	if num == 0 {
-		finalResult = "سفر"
+		finalResult = "zero"
 		return
 	}
 
@@ -14,6 +14,7 @@ func EnConverter(num uint) (finalResult string) {
 		threeDigit := num % 1000
 		num = num / 1000
 		result := enHundred(threeDigit)
+
 		if result != "" {
 			finalResult = result + level[k] + " and " + finalResult
 		}
