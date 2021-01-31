@@ -5,11 +5,11 @@ import "testing"
 func TestEnConverter(t *testing.T) {
 
 	samples := []struct {
-		in  uint
+		in  float64
 		out string
 	}{
-		{1052, "thousand and fifty two"},
-		{1, "one"},
+		//{1052, "thousand and fifty two"},
+		{1.546, "one"},
 		{6, "six"},
 		{9, "nine"},
 		{15, "fifteen"},

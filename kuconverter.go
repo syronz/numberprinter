@@ -1,18 +1,30 @@
 package numtoword
 
+import (
+	"fmt"
+	"strconv"
+)
+
 // KuConverter is used for converting number to kurdish words
-func KuConverter(num uint) (finalResult string) {
+func KuConverter(origNum float64) (finalResult string) {
+	var result string
+
 	level := []string{"", "هەزار", "ملیۆن", "ملیار", " هەزار ملیار"}
-	if num == 0 {
+	if origNum == 0 {
 		finalResult = "سفر"
 		return
 	}
 
+	//converting original float number from  float to uint
+	ipart := int64(origNum)
+
 	k := 0
+	num := uint(ipart)
+
 	for num > 0 {
 		threeDigit := num % 1000
 		num = num / 1000
-		result := kuHundred(threeDigit)
+		result = kuHundred(threeDigit)
 		if result != "" {
 			finalResult = result + level[k] + " و " + finalResult
 		}
@@ -25,6 +37,21 @@ func KuConverter(num uint) (finalResult string) {
 	//finalResult = string([]rune(finalResult)[0 : len(finalResult)-3])
 	finalResult = finalResult[0 : len(finalResult)-3]
 
+	//checking if number has cents.. if it has cents will will take the cents and append that to the final result
+	if !(origNum == float64(int64(origNum))) {
+		decpart := fmt.Sprintf("%.2g", origNum-float64(ipart))[2:]
+
+		//now we convert the decpart back to uint
+		u64, err := strconv.ParseUint(decpart, 10, 32)
+		if err != nil {
+			fmt.Println(err)
+		}
+		cents := uint(u64)
+
+		result = kuHundred(cents)
+
+		finalResult = finalResult + " و " + result + " سەنت "
+	}
 	return
 }
 
