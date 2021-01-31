@@ -5,13 +5,13 @@ import "testing"
 func TestKuConverter(t *testing.T) {
 
 	samples := []struct {
-		in  uint
+		in  float64
 		out string
 	}{
 		{0, "zero"},
-		{1, "one"},
-		{6, "six"},
-		{9, "nine"},
+		{1.14, "one"},
+		{654654.2315, "six"},
+		{95.99, "nine"},
 		{15, "fifteen"},
 		{25, "twenty and five"},
 		{22, "twenty and two"},

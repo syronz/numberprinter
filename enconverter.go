@@ -1,15 +1,27 @@
 package numtoword
 
+import (
+	"fmt"
+	"strconv"
+)
+
 // EnConverter is used for converting number to kurdish words
-func EnConverter(num uint) (finalResult string) {
-	if num == 0 {
+func EnConverter(origNum float64) (finalResult string) {
+	var result string
+	if origNum == 0 {
 		finalResult = "zero"
 		return
 	}
 
-	level := []string{"", " thousand", " million", " billion", " trilion"}
+	//converting original float number from  float to uint
+	ipart := int64(origNum)
 
+	level := []string{"", " thousand", " million", " billion", " trilion"}
+	// if num <= -1 {
+
+	// }
 	k := 0
+	num := uint(ipart)
 	for num > 0 {
 		threeDigit := num % 1000
 		num = num / 1000
@@ -24,6 +36,21 @@ func EnConverter(num uint) (finalResult string) {
 
 	finalResult = finalResult[0 : len(finalResult)-5]
 
+	//checking if number has cents.. if it has cents will will take the cents and append that to the final result
+	if !(origNum == float64(int64(origNum))) {
+		decpart := fmt.Sprintf("%.2g", origNum-float64(ipart))[2:]
+
+		//now we convert the decpart back to uint
+		u64, err := strconv.ParseUint(decpart, 10, 32)
+		if err != nil {
+			fmt.Println(err)
+		}
+		cents := uint(u64)
+
+		result = enHundred(cents)
+
+		finalResult = finalResult + " and " + result + " cents"
+	}
 	return
 }
 

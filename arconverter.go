@@ -1,6 +1,9 @@
 package numtoword
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 // TitleNum separate name and numbers title
 type TitleNum struct {
@@ -10,37 +13,46 @@ type TitleNum struct {
 }
 
 // ArConverter is used for converting number to kurdish words
-func ArConverter(num uint) (finalResult string) {
-	if num == 0 {
+func ArConverter(origNum float64) (finalResult string) {
+	var result string
+
+	if origNum == 0 {
 		finalResult = "صفر"
 		return
 	}
 
-	level := []string{"", " تريليون", "مليار", " مليون", " ألف"}
-	// level := make([]string, 4)
-	// level = append(level, "")
-	// level = append(level, "ألف ")
-	// level = append(level, "مليون ")
-	// level = append(level, "مليار ")
-	// level = append(level, "تريليون ")
+	//converting original float number from  float to uint
+	ipart := int64(origNum)
+	//level := []string{"", " تريليون", "مليار", " مليون", " ألف"}
+	level := make([]string, 4)
+	level = append(level, "")
+	level = append(level, "ألف ")
+	level = append(level, "مليون ")
+	level = append(level, "مليار ")
+	level = append(level, "تريليون ")
 
 	k := 0
+	num := uint(ipart)
+
 	for num > 0 {
+
 		threeDigit := num % 1000
+
 		num = num / 1000
 		//	tmp := num + 1
-		result := arHundred(threeDigit)
+		result = arHundred(threeDigit)
 
 		if result != "" {
 			switch k {
 			case 1:
-				fmt.Println("case 1the number is ", num)
+				fmt.Println("case 1 ..the number is: ", threeDigit)
 				if threeDigit == 1 {
 					result = ""
+					level[k] = "ألف"
 				} else if threeDigit == 2 {
 					result = ""
 					level[k] = "ألفين"
-				} else if threeDigit <= 9 {
+				} else if threeDigit > 2 {
 					level[k] = "آلاف"
 				}
 			case 2:
@@ -49,10 +61,11 @@ func ArConverter(num uint) (finalResult string) {
 
 				if threeDigit == 1 {
 					result = ""
+					level[k] = "مليون"
 				} else if threeDigit == 2 {
 					result = ""
 					level[k] = "مليونان"
-				} else if threeDigit <= 9 {
+				} else if threeDigit > 2 {
 					level[k] = "ملايين"
 
 				}
@@ -62,38 +75,69 @@ func ArConverter(num uint) (finalResult string) {
 
 				if threeDigit == 1 {
 					result = ""
+					level[k] = "مليار"
 				} else if threeDigit == 2 {
 					result = ""
 					level[k] = "ملياري"
-				} else if threeDigit <= 9 {
+				} else if threeDigit > 2 {
 					level[k] = "مليارات"
 
 				}
 			}
-			finalResult = result + level[k] + " و " + finalResult
+			if k != 0 {
+				finalResult = result + level[k] + " و " + finalResult
 
-		}
-		switch k {
-		case 1:
-			level[k] = "ألف"
-		case 2:
-			level[k] = "مليون"
-		case 3:
-			level[k] = "مليار"
+			} else {
+				finalResult = result + " و " + finalResult
 
+			}
+
+			switch k {
+			case 1:
+				level[k] = "ألف"
+			case 2:
+				level[k] = "مليون"
+			case 3:
+				level[k] = "مليار"
+
+			}
 		}
+
 		k++
 
 	}
 
 	finalResult = finalResult[0 : len(finalResult)-3]
 
+	//checking if number has cents.. if it has cents will will take the cents and append that to the final result
+	if !(origNum == float64(int64(origNum))) {
+		decpart := fmt.Sprintf("%.2g", origNum-float64(ipart))[2:]
+
+		//now we convert the decpart back to uint
+		u64, err := strconv.ParseUint(decpart, 10, 32)
+		if err != nil {
+			fmt.Println(err)
+		}
+		cents := uint(u64)
+
+		switch cents {
+		case 1, 2, 3, 4, 5, 6, 7, 8, 9:
+			switch decpart[0] {
+			case '1', '2', '3', '4', '5', '6', '7', '8', '9':
+				cents *= 10
+			}
+		}
+
+		result = arHundred(cents)
+
+		finalResult = finalResult + " و " + result + " سنتًا "
+	}
 	return
 }
 
 func arHundred(num uint) (result string) {
 	if num == 0 {
-		return
+		return ""
 	}
 
 	var nums []TitleNum
